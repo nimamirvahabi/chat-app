@@ -1,6 +1,19 @@
 import os
+import time
 
 # github address: "https://github.com/nimamirvahabi/chat-app"
+
+# our logo ^_^
+
+logo = """
+        __              _                     _     _     __                  __                 _    
+        [  |            / |_                  (_)   / |_  [  |                [  |               / |_  \n
+        | |    .--./) `| |-'    _   _   __   __   `| |-'  | |--.      .---.   | |--.    ,--.   `| |-' \n
+        | |   / /'`\;  | |     [ \ [ \ [  ] [  |   | |    | .-. |    / /'`\]  | .-. |  `'_\ :   | |   \n
+        | |   \ \._//  | |,     \ \/\ \/ /   | |   | |,   | | | |    | \__.   | | | |  // | |,  | |,  \n
+        [___]  .',__`   \__/      \__/\__/   [___]  \__/  [___]|__]   '.___.' [___]|__] \\'-;__/  \__/  \n
+            ( ( __))                                                                                 
+        """
 
 def pos(x,y):
     # curser goto the x,y position
@@ -25,8 +38,17 @@ def read_file():
 
     return text
 
+def print_commend(commend,x = 2):
+    #print logo that it get and show it for x sec
+
+    print(commend)
+    time.sleep(x)
+    os.system("cls")
+
+
 #main_loop
 
 while True:
 
+    print_commend(logo)
     exit(0)
