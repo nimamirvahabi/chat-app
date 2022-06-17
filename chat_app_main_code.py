@@ -1,3 +1,4 @@
+from asyncore import read
 import os
 import time
 _username = ""
@@ -242,7 +243,52 @@ def _main_page():
         # if user want to close the program
         exit(0)
 
+def make_chat_room():
+    
+    # make chat room
+    global _username
+    os.system("cls")
+    chat_room_member = input("enter chat room member name:")
+    chat_room_name = chat_room_member+","+_username
+    chat_room_member+=_username
+    make_file(chat_room_name)
+    write_file(chat_room_member,chat_room_name)
+    write_file(chat_room_name,"chat_room_names")
 
+def chat_room(name):
+    # chat room page
+    global _username,_password
+    chats = read_file(name)
+    while 1:
+        os.system("cls")
+        for i in range(len(chats)):
+            print(chats[i])
+        write = input()
+        if write == "exetor":
+            break
+        chats.append(_username+" : "+write+"\n")
+    a = ""
+    for i in range(len(chats)):
+        a += chats[i]
+    write_file(a,name)
+
+def chat_friends():
+    # chat friends page
+    global _username,_password
+    os.system("cls")
+    mode = input("do you want to make room or chat with friend:")
+    if mode == "make room":
+        make_chat_room()
+    else:
+        choose = input("enter your friend name:")
+        if choose+","+_username in read_file("chat_room_names") :
+            chat_room(choose+","+_username)
+        elif _username+","+choose in read_file("chat_room_names"):
+            chat_room(_username+","+choose)
+        else:
+
+            print("you don't have this friend")
+            input("press enter to continue")
 
 
 
@@ -262,7 +308,7 @@ while True:
         while True:
             choose = _main_page()
             if choose == 1:
-                break
+                chat_friends()
             elif choose == 2:
                 break
             elif choose == 3:
