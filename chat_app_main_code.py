@@ -1,6 +1,7 @@
 import os
 import time
-from turtle import st
+_username = ""
+_password = ""
 
 # github address: "https://github.com/nimamirvahabi/chat-app"
 
@@ -46,6 +47,24 @@ introduce = """ welcome to chat app \n
                 and if you have any question \n
                 you can contact me in mirvahabinima@gmail.com \n
                 """
+
+main_page =[" _____________________________________________________  \n",
+            "|                   main_page                         | \n",
+            "| --------------------------------------------------- | \n",
+            "|                                                     | \n",
+            "|       chat_with_friend                              | \n",
+            "|                                                     | \n",
+            "|       group_chat                                    | \n",
+            "|                                                     | \n",
+            "|       private_chat                                  | \n",
+            "|                                                     | \n",
+            "|       log_out                                       | \n",
+            "|                                                     | \n",
+            "|       close                                         | \n",
+            "|                                                     | \n",
+            "| --------------------------------------------------- | \n",
+            "|    please write your choose ->                      | \n",
+            "|_____________________________________________________| \n"]
 def pos(x,y):
     # curser goto the x,y position
 
@@ -56,9 +75,9 @@ def write_file(text):
     with open('./userpass.txt', 'w') as f:
             f.write(text)
             f.close()
-def make_file():
+def make_file(name):
     # make file
-    with open('./userpass.txt',"a") as f:
+    with open('./'+name+".txt","a") as f:
         f.close()
 
 def read_file():
@@ -100,6 +119,9 @@ def log_in():
     password = input("enter your password:")
     if [user_name,password+"\n"] in userpass:
         print("log in success")
+        _username = user_name
+        _password = password
+
         return True
     else:
         print("log in failed")
@@ -110,12 +132,12 @@ def sign_up():
 
     user_name = input("enter your user name:")
     password = input("enter your password:")
-    userpass.append([user_name,password+"\n"])  
+    userpass.append(["\n"+user_name,password])  
     a = ""
     for i in range(len(userpass)):
-        a += userpass[i][0] + "," + userpass[i][1] + "\n"
+        a += userpass[i][0] + "," + userpass[i][1]
     write_file(a)  
-        
+    make_file(user_name)
 
 def _start_page():
     #start page that it show it and get commend
@@ -159,7 +181,35 @@ def _start_page():
         input("press enter to continue")
         return 1
 
+def _main_page():
+    # main page that it show it and get commend
+    os.system("cls")
+    for i in range(len(main_page)):
+        print(main_page[i])
+    choose = input(pos(43,31))
+    if choose == "chat_with_friend":
+        # if user want to chat with friend
+        os.system("cls")
+        input("press enter to continue")
+        return 1
+    elif choose == "group_chat":
+        # if user want to group chat
+        os.system("cls")
+        input("press enter to continue")
+        return 2
+    elif choose == "private_chat":
+        # if user want to private chat
+        os.system("cls")
+        input("press enter to continue")
+        return 3
+    elif choose == "log_out":
+        # if user want to log out
+        os.system("cls")
 
+        return 4
+    elif choose == "close":
+        # if user want to close the program
+        exit(0)
 
 
 
@@ -176,9 +226,9 @@ print_commend(logo)
 while True:
 
     os.system("cls")
+    
     if _start_page() == 2:
-        # user enter to the chat app
-        # sorry!! this part is not done yet
 
-        pass
+        _main_page()
+    
     os.system("cls")
