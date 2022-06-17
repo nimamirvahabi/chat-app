@@ -31,6 +31,18 @@ start_page =[" ____________________________________________________  \n",
             "|    please write your choose ->                      | \n",
             "|_____________________________________________________| \n"]
 
+_private_chat = [" ____________________________________________________  \n",
+                 "|                   private chat                      | \n",
+                 "| --------------------------------------------------- | \n",
+                 "|                                                     | \n",
+                 "|       see chat                       write chat     | \n",
+                 "|                                                     | \n",
+                 "|       close                                         | \n",
+                 "|                                                     | \n",
+                 "| --------------------------------------------------- | \n",
+                 "|    please write your choose ->                      | \n",
+                 "|_____________________________________________________| \n"]
+
 introduce = """ welcome to chat app \n
                 this chat app is made by nimamirvahabi \n
                 github address: nima.mirvahabi.github.io/chat-app \n
@@ -70,9 +82,9 @@ def pos(x,y):
 
     return '\x1b[' + str(y) + ';' + str(x) + 'H'
 
-def write_file(text):
+def write_file(text,name="userpass"):
     # write text to file
-    with open('./userpass.txt', 'w') as f:
+    with open('./'+name+'.txt', 'w') as f:
             f.write(text)
             f.close()
 def make_file(name):
@@ -80,9 +92,9 @@ def make_file(name):
     with open('./'+name+".txt","a") as f:
         f.close()
 
-def read_file():
+def read_file(name="./userpass"):
     # read file
-    with open('./userpass.txt',"r") as f:
+    with open('./'+name+'.txt',"r") as f:
         text = f.readlines()
         f.close()
 
@@ -115,6 +127,7 @@ def user_pass_prosses():
 def log_in():
     # log in page
 
+    global _username,_password
     user_name = input("enter your user name:")
     password = input("enter your password:")
     if [user_name,password+"\n"] in userpass:
@@ -130,6 +143,7 @@ def log_in():
 def sign_up():
     # sign up page
 
+    
     user_name = input("enter your user name:")
     password = input("enter your password:")
     userpass.append(["\n"+user_name,password])  
@@ -181,6 +195,27 @@ def _start_page():
         input("press enter to continue")
         return 1
 
+def private_chat():
+    # private chat page
+
+    global _username,_password
+    choose = input()
+    if choose == "see chat":
+        own = read_file(_username)
+        for i in range(len(own)):
+            print(own[i])
+    elif choose == "write chat":
+        own = read_file(_username)
+        for i in range(len(own)):
+            print(own[i])
+        write = input()
+        own.append(write)
+        a = ""
+        for i in range(len(own)):
+            a += own[i]
+        write_file(a,_username)
+    input("press enter to continue")
+
 def _main_page():
     # main page that it show it and get commend
     os.system("cls")
@@ -190,22 +225,18 @@ def _main_page():
     if choose == "chat_with_friend":
         # if user want to chat with friend
         os.system("cls")
-        input("press enter to continue")
         return 1
     elif choose == "group_chat":
         # if user want to group chat
         os.system("cls")
-        input("press enter to continue")
         return 2
     elif choose == "private_chat":
         # if user want to private chat
         os.system("cls")
-        input("press enter to continue")
         return 3
     elif choose == "log_out":
         # if user want to log out
         os.system("cls")
-
         return 4
     elif choose == "close":
         # if user want to close the program
@@ -228,7 +259,23 @@ while True:
     os.system("cls")
     
     if _start_page() == 2:
+        while True:
+            choose = _main_page()
+            if choose == 1:
+                break
+            elif choose == 2:
+                break
+            elif choose == 3:
+                for i in range(len(_private_chat)):
+                    print(_private_chat[i])
+                private_chat()
 
-        _main_page()
+
+            elif choose == 4:
+                break
+            else:
+                print("error")
+                input("press enter to continue")
+
     
     os.system("cls")
